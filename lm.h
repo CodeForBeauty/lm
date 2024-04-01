@@ -5,6 +5,7 @@
 namespace lm {
 	const float PI = 3.141592653589793;
 	const float E = 2.718281828459045;
+	const float PIrad = PI / 180;
 
 
 	float degrees2radians(float angle);
@@ -43,12 +44,12 @@ namespace lm {
 			return *this;
 		}
 
-		vec2& operator++() {
+		vec2& operator++(int) {
 			x++;
 			y++;
 			return *this;
 		}
-		vec2& operator--() {
+		vec2& operator--(int) {
 			x--;
 			y--;
 			return *this;
@@ -102,13 +103,13 @@ namespace lm {
 			return *this;
 		}
 
-		vec3& operator++() {
+		vec3& operator++(int) {
 			x++;
 			y++;
 			z++;
 			return *this;
 		}
-		vec3& operator--() {
+		vec3& operator--(int) {
 			x--;
 			y--;
 			z--;
@@ -179,14 +180,14 @@ namespace lm {
 			return *this;
 		}
 
-		vec4& operator++() {
+		vec4& operator++(int) {
 			x++;
 			y++;
 			z++;
 			w++;
 			return *this;
 		}
-		vec4& operator--() {
+		vec4& operator--(int) {
 			x--;
 			y--;
 			z--;
@@ -195,279 +196,100 @@ namespace lm {
 		}
 	};
 
-	// Add operator overload for vectors
-	vec2 operator+(const vec2& v1, const vec2& v2) {
-		return vec2(v1.x + v2.x, v1.y + v2.y);
-	}
-	vec3 operator+(const vec3& v1, const vec3& v2) {
-		return vec3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
-	}
-	vec4 operator+(const vec4& v1, const vec4& v2) {
-		return vec4(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z, v1.w + v2.w);
-	}
+	lm::vec2 operator+(const lm::vec2& v1, const lm::vec2& v2);
+	lm::vec3 operator+(const lm::vec3& v1, const lm::vec3& v2);
+	lm::vec4 operator+(const lm::vec4& v1, const lm::vec4& v2);
 
 	// Multiply operator overload for vectors
-	vec2 operator*(const vec2& v1, const vec2& v2) {
-		return vec2(v1.x * v2.x, v1.y * v2.y);
-	}
-	vec3 operator*(const vec3& v1, const vec3& v2) {
-		return vec3(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z);
-	}
-	vec4 operator*(const vec4& v1, const vec4& v2) {
-		return vec4(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z, v1.w * v2.w);
-	}
+	lm::vec2 operator*(const lm::vec2& v1, const lm::vec2& v2);
+	lm::vec3 operator*(const lm::vec3& v1, const lm::vec3& v2);
+	lm::vec4 operator*(const lm::vec4& v1, const lm::vec4& v2);
 
 	// Subtract operator overload for vectors
-	vec2 operator-(const vec2& v1, const vec2& v2) {
-		return vec2(v1.x - v2.x, v1.y - v2.y);
-	}
-	vec3 operator-(const vec3& v1, const vec3& v2) {
-		return vec3(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
-	}
-	vec4 operator-(const vec4& v1, const vec4& v2) {
-		return vec4(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z, v1.w - v2.w);
-	}
+	lm::vec2 operator-(const lm::vec2& v1, const lm::vec2& v2);
+	lm::vec3 operator-(const lm::vec3& v1, const lm::vec3& v2);
+	lm::vec4 operator-(const lm::vec4& v1, const lm::vec4& v2);
 
 	// Divide operator overload for vectors
-	vec2 operator/(const vec2& v1, const vec2& v2) {
-		return vec2(v1.x / v2.x, v1.y / v2.y);
-	}
-	vec3 operator/(const vec3& v1, const vec3& v2) {
-		return vec3(v1.x / v2.x, v1.y / v2.y, v1.z / v2.z);
-	}
-	vec4 operator/(const vec4& v1, const vec4& v2) {
-		return vec4(v1.x / v2.x, v1.y / v2.y, v1.z / v2.z, v1.w / v2.w);
-	}
+	lm::vec2 operator/(const lm::vec2& v1, const lm::vec2& v2);
+	lm::vec3 operator/(const lm::vec3& v1, const lm::vec3& v2);
+	lm::vec4 operator/(const lm::vec4& v1, const lm::vec4& v2);
 
 	// Vector operations with float
 	// Add operator overload
-	vec2 operator+(const float& value, const vec2& vector) {
-		return vec2(vector.x + value, vector.y + value);
-	}
-	vec3 operator+(const float& value, const vec3& vector) {
-		return vec3(vector.x + value, vector.y + value, vector.z + value);
-	}
-	vec4 operator+(const float& value, const vec4& vector) {
-		return vec4(vector.x + value, vector.y + value, vector.z + value, vector.w + value);
-	}
+	lm::vec2 operator+(const float& value, const lm::vec2& vector);
+	lm::vec3 operator+(const float& value, const lm::vec3& vector);
+	lm::vec4 operator+(const float& value, const lm::vec4& vector);
 
 	// Multiply operator overload
-	vec2 operator*(const float& value, const vec2& vector) {
-		return vec2(vector.x * value, vector.y * value);
-	}
-	vec3 operator*(const float& value, const vec3& vector) {
-		return vec3(vector.x * value, vector.y * value, vector.z * value);
-	}
-	vec4 operator*(const float& value, const vec4& vector) {
-		return vec4(vector.x * value, vector.y * value, vector.z * value, vector.w * value);
-	}
+	lm::vec2 operator*(const float& value, const lm::vec2& vector);
+	lm::vec3 operator*(const float& value, const lm::vec3& vector);
+	lm::vec4 operator*(const float& value, const lm::vec4& vector);
 
 	// Subtract operator overload
-	vec2 operator-(const float& value, const vec2& vector) {
-		return vec2(vector.x - value, vector.y - value);
-	}
-	vec3 operator-(const float& value, const vec3& vector) {
-		return vec3(vector.x - value, vector.y - value, vector.z - value);
-	}
-	vec4 operator-(const float& value, const vec4& vector) {
-		return vec4(vector.x - value, vector.y - value, vector.z - value, vector.w - value);
-	}
+	lm::vec2 operator-(const float& value, const lm::vec2& vector);
+	lm::vec3 operator-(const float& value, const lm::vec3& vector);
+	lm::vec4 operator-(const float& value, const lm::vec4& vector);
 
 	// Divide operator overload
-	vec2 operator/(const float& value, const vec2& vector) {
-		return vec2(vector.x / value, vector.y / value);
-	}
-	vec3 operator/(const float& value, const vec3& vector) {
-		return vec3(vector.x / value, vector.y / value, vector.z / value);
-	}
-	vec4 operator/(const float& value, const vec4& vector) {
-		return vec4(vector.x / value, vector.y / value, vector.z / value, vector.w / value);
-	}
+	lm::vec2 operator/(const float& value, const lm::vec2& vector);
+	lm::vec3 operator/(const float& value, const lm::vec3& vector);
+	lm::vec4 operator/(const float& value, const lm::vec4& vector);
 
 	// Negative operator overload
-	vec2 operator-(const vec2& vector) {
-		return vec2(-vector.x, -vector.y);
-	}
-	vec3 operator-(const vec3& vector) {
-		return vec3(-vector.x, -vector.y, -vector.z);
-	}
-	vec4 operator-(const vec4& vector) {
-		return vec4(-vector.x, -vector.y, -vector.z, -vector.w);
-	}
+	lm::vec2 operator-(const lm::vec2& vector);
+	lm::vec3 operator-(const lm::vec3& vector);
+	lm::vec4 operator-(const lm::vec4& vector);
 
 	// Compound assign operators overload
 	// Add
-	vec2& operator+=(vec2& vector, const float& value) {
-		vector.x += value;
-		vector.y += value;
-		return vector;
-	}
-	vec3& operator+=(vec3& vector, const float& value) {
-		vector.x += value;
-		vector.y += value;
-		vector.z += value;
-		return vector;
-	}
-	vec4& operator+=(vec4& vector, const float& value) {
-		vector.x += value;
-		vector.y += value;
-		vector.z += value;
-		vector.w += value;
-		return vector;
-	}
+	lm::vec2& operator+=(lm::vec2& vector, const float& value);
+	lm::vec3& operator+=(lm::vec3& vector, const float& value);
+	lm::vec4& operator+=(lm::vec4& vector, const float& value);
 
 	// Multiply
-	vec2& operator*=(vec2& vector, const float& value) {
-		vector.x *= value;
-		vector.y *= value;
-		return vector;
-	}
-	vec3& operator*=(vec3& vector, const float& value) {
-		vector.x *= value;
-		vector.y *= value;
-		vector.z *= value;
-		return vector;
-	}
-	vec4& operator*=(vec4& vector, const float& value) {
-		vector.x *= value;
-		vector.y *= value;
-		vector.z *= value;
-		vector.w *= value;
-		return vector;
-	}
+	lm::vec2& operator*=(lm::vec2& vector, const float& value);
+	lm::vec3& operator*=(lm::vec3& vector, const float& value);
+	lm::vec4& operator*=(lm::vec4& vector, const float& value);
 
 	// Subtract
-	vec2& operator-=(vec2& vector, const float& value) {
-		vector.x -= value;
-		vector.y -= value;
-		return vector;
-	}
-	vec3& operator-=(vec3& vector, const float& value) {
-		vector.x -= value;
-		vector.y -= value;
-		vector.z -= value;
-		return vector;
-	}
-	vec4& operator-=(vec4& vector, const float& value) {
-		vector.x -= value;
-		vector.y -= value;
-		vector.z -= value;
-		vector.w -= value;
-		return vector;
-	}
+	lm::vec2& operator-=(lm::vec2& vector, const float& value);
+	lm::vec3& operator-=(lm::vec3& vector, const float& value);
+	lm::vec4& operator-=(lm::vec4& vector, const float& value);
 
 	// Divide
-	vec2& operator/=(vec2& vector, const float& value) {
-		vector.x /= value;
-		vector.y /= value;
-		return vector;
-	}
-	vec3& operator/=(vec3& vector, const float& value) {
-		vector.x /= value;
-		vector.y /= value;
-		vector.z /= value;
-		return vector;
-	}
-	vec4& operator/=(vec4& vector, const float& value) {
-		vector.x /= value;
-		vector.y /= value;
-		vector.z /= value;
-		vector.w /= value;
-		return vector;
-	}
+	lm::vec2& operator/=(lm::vec2& vector, const float& value);
+	lm::vec3& operator/=(lm::vec3& vector, const float& value);
+	lm::vec4& operator/=(lm::vec4& vector, const float& value);
 
 	// Compound assignment with vectors
 	// Add
-	vec2& operator+=(vec2& v1, const vec2& v2) {
-		v1.x += v1.x;
-		v1.y += v2.y;
-		return v1;
-	}
-	vec3& operator+=(vec3& v1, const vec3& v2) {
-		v1.x += v1.x;
-		v1.y += v2.y;
-		v1.z += v2.z;
-		return v1;
-	}
-	vec4& operator+=(vec4& v1, const vec4& v2) {
-		v1.x += v1.x;
-		v1.y += v2.y;
-		v1.z += v2.z;
-		v1.w += v2.w;
-		return v1;
-	}
+	lm::vec2& operator+=(lm::vec2& v1, const lm::vec2& v2);
+	lm::vec3& operator+=(lm::vec3& v1, const lm::vec3& v2);
+	lm::vec4& operator+=(lm::vec4& v1, const lm::vec4& v2);
 
 	// Multiply
-	vec2& operator*=(vec2& v1, const vec2& v2) {
-		v1.x *= v1.x;
-		v1.y *= v2.y;
-		return v1;
-	}
-	vec3& operator*=(vec3& v1, const vec3& v2) {
-		v1.x *= v1.x;
-		v1.y *= v2.y;
-		v1.z *= v2.z;
-		return v1;
-	}
-	vec4& operator*=(vec4& v1, const vec4& v2) {
-		v1.x *= v1.x;
-		v1.y *= v2.y;
-		v1.z *= v2.z;
-		v1.w *= v2.w;
-		return v1;
-	}
+	lm::vec2& operator*=(lm::vec2& v1, const lm::vec2& v2);
+	lm::vec3& operator*=(lm::vec3& v1, const lm::vec3& v2);
+	lm::vec4& operator*=(lm::vec4& v1, const lm::vec4& v2);
 
 	// Subtract
-	vec2& operator-=(vec2& v1, const vec2& v2) {
-		v1.x -= v1.x;
-		v1.y -= v2.y;
-		return v1;
-	}
-	vec3& operator-=(vec3& v1, const vec3& v2) {
-		v1.x -= v1.x;
-		v1.y -= v2.y;
-		v1.z -= v2.z;
-		return v1;
-	}
-	vec4& operator-=(vec4& v1, const vec4& v2) {
-		v1.x -= v1.x;
-		v1.y -= v2.y;
-		v1.z -= v2.z;
-		v1.w -= v2.w;
-		return v1;
-	}
+	lm::vec2& operator-=(lm::vec2& v1, const lm::vec2& v2);
+	lm::vec3& operator-=(lm::vec3& v1, const lm::vec3& v2);
+	lm::vec4& operator-=(lm::vec4& v1, const lm::vec4& v2);
 
 	// Divide
-	vec2& operator/=(vec2& v1, const vec2& v2) {
-		v1.x /= v1.x;
-		v1.y /= v2.y;
-		return v1;
-	}
-	vec3& operator/=(vec3& v1, const vec3& v2) {
-		v1.x /= v1.x;
-		v1.y /= v2.y;
-		v1.z /= v2.z;
-		return v1;
-	}
-	vec4& operator/=(vec4& v1, const vec4& v2) {
-		v1.x /= v1.x;
-		v1.y /= v2.y;
-		v1.z /= v2.z;
-		v1.w /= v2.w;
-		return v1;
-	}
+	lm::vec2& operator/=(lm::vec2& v1, const lm::vec2& v2);
+	lm::vec3& operator/=(lm::vec3& v1, const lm::vec3& v2);
+	lm::vec4& operator/=(lm::vec4& v1, const lm::vec4& v2);
+
+	// Modulo operator overload
+	vec2 operator%(const vec2& vector, const float& value);
+	vec3 operator%(const vec3& vector, const float& value);
+	vec4 operator%(const vec4& vector, const float& value);
 
 	// Cout operator overloading for vectors
-	std::ostream& operator<<(std::ostream& os, const vec2& v) {
-		os << "x = " << v.x << ", y = " << v.y;
-		return os;
-	}
-	std::ostream& operator<<(std::ostream& os, const vec3& v) {
-		os << "x = " << v.x << ", y = " << v.y << ", z = " << v.z;
-		return os;
-	}
-	std::ostream& operator<<(std::ostream& os, const vec4& v) {
-		os << "x = " << v.x << ", y = " << v.y << ", z = " << v.z << ", w = " << v.w;
-		return os;
-	}
+	std::ostream& operator<<(std::ostream& os, const lm::vec2& v);
+	std::ostream& operator<<(std::ostream& os, const lm::vec3& v);
+	std::ostream& operator<<(std::ostream& os, const lm::vec4& v);
 }
