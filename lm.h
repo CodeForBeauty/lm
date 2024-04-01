@@ -3,14 +3,16 @@
 
 
 namespace lm {
+	// Constant variables
 	const float PI = 3.141592653589793;
 	const float E = 2.718281828459045;
 	const float PIrad = PI / 180;
 
-
+	// Converting euler degrees and radians
 	float degrees2radians(float angle);
 	float radians2degrees(float radians);
 
+	// Vector types
 	struct vec2 {
 	private:
 		float* ptr;
@@ -31,8 +33,8 @@ namespace lm {
 
 		float& operator[] (int idx) {
 			if (idx > 1) {
-				std::cerr << "vec2: Index out of range 0-1." << std::endl;
-				throw std::out_of_range("Index out of range 0-1.");
+				std::cerr << "vec2: Index out of range 0-2." << std::endl;
+				throw std::out_of_range("Index out of range 0-2.");
 			}
 			return ptr[idx];
 		}
@@ -87,8 +89,8 @@ namespace lm {
 
 		float& operator[] (int idx) {
 			if (idx > 2) {
-				std::cerr << "vec3: Index out of range 0-2." << std::endl;
-				throw std::out_of_range("Index out of range 0-2.");
+				std::cerr << "vec3: Index out of range 0-3." << std::endl;
+				throw std::out_of_range("Index out of range 0-3.");
 			}
 			return ptr[idx];
 		}
@@ -160,8 +162,8 @@ namespace lm {
 
 		float& operator[] (int idx) {
 			if (idx > 3) {
-				std::cerr << "vec4: Index out of range 0-3." << std::endl;
-				throw std::out_of_range("Index out of range 0-3.");
+				std::cerr << "vec4: Index out of range 0-4." << std::endl;
+				throw std::out_of_range("Index out of range 0-4.");
 			}
 			return ptr[idx];
 		}
@@ -237,6 +239,144 @@ namespace lm {
 	vec2 vecSqrt(const vec2& vector);
 	vec3 vecSqrt(const vec3& vector);
 	vec4 vecSqrt(const vec4& vector);
+
+
+	// Matrix types
+	// Square matricies
+	struct mat2x2 {
+	private:
+		vec2* ptr;
+	public:
+		vec2 x, y;
+
+		mat2x2() {
+			x = {}; y = {};
+			ptr = &x;
+		}
+		mat2x2(const vec2& x1, const vec2& y1) {
+			x = x1; y = y1;
+			ptr = &x;
+		}
+
+		vec2 column(int idx) {
+			return vec2(x[idx], y[idx]);
+		}
+
+
+		mat2x2& operator=(const mat2x2& value) {
+			x = value.x;
+			y = value.y;
+			return *this;
+		}
+
+		vec2& operator[] (int idx) {
+			if (idx > 1) {
+				std::cerr << "vec4: Index out of range 0-2." << std::endl;
+				throw std::out_of_range("Index out of range 0-2.");
+			}
+			return ptr[idx];
+		}
+	};
+	struct mat3x3 {
+	private:
+		vec3* ptr;
+	public:
+		vec3 x, y, z;
+
+		mat3x3() {
+			x = {}; y = {}; z = {};
+			ptr = &x;
+		}
+		mat3x3(const mat2x2& value) {
+			x = value.x; y = value.y; z = {};
+			ptr = &x;
+		}
+		mat3x3(vec3 x1, vec3 y1, vec3 z1) {
+			x = x1; y = y1; z = z1;
+			ptr = &x;
+		}
+
+
+		vec3 column(int idx) {
+			return vec3(x[idx], y[idx], z[idx]);
+		}
+
+
+		mat3x3& operator=(const mat3x3& value) {
+			x = value.x;
+			y = value.y;
+			z = value.z;
+			return *this;
+		}
+		mat3x3& operator=(const mat2x2& value) {
+			x = value.x;
+			y = value.y;
+			return *this;
+		}
+
+		vec3& operator[] (int idx) {
+			if (idx > 2) {
+				std::cerr << "vec4: Index out of range 0-3." << std::endl;
+				throw std::out_of_range("Index out of range 0-3.");
+			}
+			return ptr[idx];
+		}
+	};
+	struct mat4x4 {
+	private:
+		vec4* ptr;
+	public:
+		vec4 x, y, z, w;
+
+		mat4x4() {
+			x = {}; y = {}; z = {}; w = {};
+			ptr = &x;
+		}
+		mat4x4(const mat2x2& value) {
+			x = value.x; y = value.y; z = {}; w = {};
+			ptr = &x;
+		}
+		mat4x4(const mat3x3& value) {
+			x = value.x; y = value.y; z = value.z; w = {};
+			ptr = &x;
+		}
+		mat4x4(vec4 x1, vec4 y1, vec4 z1, vec4 w1) {
+			x = x1; y = y1; z = z1; w = w1;
+			ptr = &x;
+		}
+
+
+		vec4 column(int idx) {
+			return vec4(x[idx], y[idx], z[idx], w[idx]);
+		}
+
+
+		mat4x4& operator=(const mat4x4& value) {
+			x = value.x;
+			y = value.y;
+			z = value.z;
+			return *this;
+		}
+		mat4x4& operator=(const mat2x2& value) {
+			x = value.x;
+			y = value.y;
+			return *this;
+		}
+		mat4x4& operator=(const mat3x3& value) {
+			x = value.x;
+			y = value.y;
+			z = value.z;
+			return *this;
+		}
+
+		vec4& operator[] (int idx) {
+			if (idx > 4) {
+				std::cerr << "vec4: Index out of range 0-4." << std::endl;
+				throw std::out_of_range("Index out of range 0-4.");
+			}
+			return ptr[idx];
+		}
+	};
 
 
 	// Add operator overload for vectors
@@ -336,4 +476,12 @@ namespace lm {
 	std::ostream& operator<<(std::ostream& os, const vec2& v);
 	std::ostream& operator<<(std::ostream& os, const vec3& v);
 	std::ostream& operator<<(std::ostream& os, const vec4& v);
+
+
+
+	// Matrix operator overloads
+	// Square matricies
+	vec2 operator*(mat2x2& mat, const vec2& vec);
+	vec3 operator*(mat3x3& mat, const vec3& vec);
+	vec4 operator*(mat4x4& mat, const vec4& vec);
 }

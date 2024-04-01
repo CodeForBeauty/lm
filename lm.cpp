@@ -384,3 +384,15 @@ std::ostream& lm::operator<<(std::ostream& os, const vec4& v) {
 	os << "x = " << v.x << ", y = " << v.y << ", z = " << v.z << ", w = " << v.w;
 	return os;
 }
+
+vec2 lm::operator*(mat2x2& mat, const vec2& vec) {
+	return { dot(mat.column(0), vec), dot(mat.column(1), vec) };
+}
+
+vec3 lm::operator*(mat3x3& mat, const vec3& vec) {
+	return { dot(mat.column(0), vec), dot(mat.column(1), vec), dot(mat.column(2), vec) };
+}
+
+vec4 lm::operator*(mat4x4& mat, const vec4& vec) {
+	return { dot(mat.column(0), vec), dot(mat.column(1), vec), dot(mat.column(2), vec), dot(mat.column(3), vec) };
+}
