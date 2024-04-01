@@ -3,56 +3,196 @@
 
 
 namespace lm {
-	const double PI = 3.141592653589793;
-	const double E = 2.718281828459045;
+	const float PI = 3.141592653589793;
+	const float E = 2.718281828459045;
+
+
+	float degrees2radians(float angle);
+	float radians2degrees(float radians);
 
 	struct vec2 {
+	private:
+		float* ptr;
+	public:
 		float x, y;
 		vec2() {
 			x = 0; y = 0;
+			ptr = &x;
 		}
 		vec2(float xVal, float yVal) {
 			x = xVal; y = yVal;
+			ptr = &x;
 		}
 
+		float& operator[] (int idx) {
+			if (idx > 1) {
+				std::cerr << "vec2: Index out of range 0-1." << std::endl;
+				throw std::out_of_range("Index out of range 0-1.");
+			}
+			return ptr[idx];
+		}
+
+		vec2& operator=(vec2 v) {
+			x = v.x;
+			y = v.y;
+			return *this;
+		}
+		vec2& operator=(float v) {
+			x = v;
+			y = v;
+			return *this;
+		}
+
+		vec2& operator++() {
+			x++;
+			y++;
+			return *this;
+		}
+		vec2& operator--() {
+			x--;
+			y--;
+			return *this;
+		}
 	};
 	struct vec3 {
+	private:
+		float* ptr;
+	public:
 		float x, y, z;
 		vec3() {
 			x = 0; y = 0; z = 0;
+			ptr = &x;
 		}
 		vec3(float xVal, float yVal) {
 			x = xVal; y = yVal; z = 0;
+			ptr = &x;
 		}
 		vec3(float xVal, float yVal, float zVal) {
 			x = xVal; y = yVal; z = zVal;
+			ptr = &x;
 		}
 		vec3(const vec2& v) {
 			x = v.x; y = v.y; z = 0;
+			ptr = &x;
 		}
 
+		float& operator[] (int idx) {
+			if (idx > 2) {
+				std::cerr << "vec3: Index out of range 0-2." << std::endl;
+				throw std::out_of_range("Index out of range 0-2.");
+			}
+			return ptr[idx];
+		}
+
+		vec3& operator=(vec2 v) {
+			x = v.x;
+			y = v.y;
+			return *this;
+		}
+		vec3& operator=(vec3 v) {
+			x = v.x;
+			y = v.y;
+			z = v.z;
+			return *this;
+		}
+		vec3& operator=(float v) {
+			x = v;
+			y = v;
+			z = v;
+			return *this;
+		}
+
+		vec3& operator++() {
+			x++;
+			y++;
+			z++;
+			return *this;
+		}
+		vec3& operator--() {
+			x--;
+			y--;
+			z--;
+			return *this;
+		}
 	};
 	struct vec4 {
+	private:
+		float* ptr;
+	public:
 		float x, y, z, w;
 		vec4() {
 			x = 0; y = 0; z = 0; w = 0;
+			ptr = &x;
 		}
 		vec4(float xVal, float yVal) {
 			x = xVal; y = yVal; z = 0; w = 0;
+			ptr = &x;
 		}
 		vec4(float xVal, float yVal, float zVal) {
 			x = xVal; y = yVal; z = zVal; w = 0;
+			ptr = &x;
 		}
 		vec4(float xVal, float yVal, float zVal, float wVal) {
 			x = xVal; y = yVal; z = zVal; w = wVal;
+			ptr = &x;
 		}
 		vec4(const vec2& v) {
 			x = v.x; y = v.y; z = 0; w = 0;
+			ptr = &x;
 		}
 		vec4(const vec3& v) {
 			x = v.x; y = v.y; z = v.z; w = 0;
+			ptr = &x;
 		}
 
+		float& operator[] (int idx) {
+			if (idx > 3) {
+				std::cerr << "vec4: Index out of range 0-3." << std::endl;
+				throw std::out_of_range("Index out of range 0-3.");
+			}
+			return ptr[idx];
+		}
+
+		vec4& operator=(vec2 v) {
+			x = v.x;
+			y = v.y;
+			return *this;
+		}
+		vec4& operator=(vec3 v) {
+			x = v.x;
+			y = v.y;
+			z = v.z;
+			return *this;
+		}
+		vec4& operator=(vec4 v) {
+			x = v.x;
+			y = v.y;
+			z = v.z;
+			w = v.w;
+			return *this;
+		}
+		vec4& operator=(float v) {
+			x = v;
+			y = v;
+			z = v;
+			w = v;
+			return *this;
+		}
+
+		vec4& operator++() {
+			x++;
+			y++;
+			z++;
+			w++;
+			return *this;
+		}
+		vec4& operator--() {
+			x--;
+			y--;
+			z--;
+			w--;
+			return *this;
+		}
 	};
 
 	// Add operator overload for vectors
