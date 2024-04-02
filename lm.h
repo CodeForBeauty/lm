@@ -87,6 +87,10 @@ namespace lm {
 			ptr = &x;
 		}
 
+		vec2 cutVec2() {
+			return { x, y };
+		}
+
 		float& operator[] (int idx) {
 			if (idx > 2) {
 				std::cerr << "vec3: Index out of range 0-3." << std::endl;
@@ -158,6 +162,13 @@ namespace lm {
 		vec4(const vec3& v) {
 			x = v.x; y = v.y; z = v.z; w = 0;
 			ptr = &x;
+		}
+
+		vec2 cutVec2() {
+			return { x, y };
+		}
+		vec3 cutVec3() {
+			return { x, y, z };
 		}
 
 		float& operator[] (int idx) {
@@ -484,4 +495,13 @@ namespace lm {
 	vec2 operator*(mat2x2& mat, const vec2& vec);
 	vec3 operator*(mat3x3& mat, const vec3& vec);
 	vec4 operator*(mat4x4& mat, const vec4& vec);
+
+	mat2x2 operator*(const mat2x2& mat1, mat2x2& mat2);
+	mat3x3 operator*(const mat3x3& mat1, mat3x3& mat2);
+	mat4x4 operator*(const mat4x4& mat1, mat4x4& mat2);
+
+
+	std::ostream& operator<<(std::ostream& os, const mat2x2& v);
+	std::ostream& operator<<(std::ostream& os, const mat3x3& v);
+	std::ostream& operator<<(std::ostream& os, const mat4x4& v);
 }

@@ -385,6 +385,7 @@ std::ostream& lm::operator<<(std::ostream& os, const vec4& v) {
 	return os;
 }
 
+
 vec2 lm::operator*(mat2x2& mat, const vec2& vec) {
 	return { dot(mat.column(0), vec), dot(mat.column(1), vec) };
 }
@@ -395,4 +396,45 @@ vec3 lm::operator*(mat3x3& mat, const vec3& vec) {
 
 vec4 lm::operator*(mat4x4& mat, const vec4& vec) {
 	return { dot(mat.column(0), vec), dot(mat.column(1), vec), dot(mat.column(2), vec), dot(mat.column(3), vec) };
+}
+
+
+
+mat2x2 lm::operator*(const mat2x2& mat1, mat2x2& mat2) {
+	return {{ dot(mat1.x, mat2.column(0)), dot(mat1.x, mat2.column(1)) },
+			{ dot(mat1.y, mat2.column(0)), dot(mat1.y, mat2.column(1)) }};
+}
+
+mat3x3 lm::operator*(const mat3x3& mat1, mat3x3& mat2) {
+	return {{ dot(mat1.x, mat2.column(0)), dot(mat1.x, mat2.column(1)), dot(mat1.z, mat2.column(2)) },
+			{ dot(mat1.y, mat2.column(0)), dot(mat1.y, mat2.column(1)), dot(mat1.y, mat2.column(2)) },
+			{ dot(mat1.z, mat2.column(0)), dot(mat1.z, mat2.column(1)), dot(mat1.z, mat2.column(2)) }};
+}
+
+mat4x4 lm::operator*(const mat4x4& mat1, mat4x4& mat2) {
+	return {{ dot(mat1.x, mat2.column(0)), dot(mat1.x, mat2.column(1)), dot(mat1.x, mat2.column(2)), dot(mat1.x, mat2.column(3)) },
+			{ dot(mat1.y, mat2.column(0)), dot(mat1.y, mat2.column(1)), dot(mat1.y, mat2.column(2)), dot(mat1.y, mat2.column(3)) },
+			{ dot(mat1.z, mat2.column(0)), dot(mat1.z, mat2.column(1)), dot(mat1.z, mat2.column(2)), dot(mat1.z, mat2.column(3)) },
+			{ dot(mat1.w, mat2.column(0)), dot(mat1.w, mat2.column(1)), dot(mat1.w, mat2.column(2)), dot(mat1.w, mat2.column(3)) }};
+}
+
+std::ostream& lm::operator<<(std::ostream& os, const mat2x2& v) {
+	os << " | " << v.x << " |\n";
+	os << " | " << v.y << " |\n";
+	return os;
+}
+
+std::ostream& lm::operator<<(std::ostream& os, const mat3x3& v) {
+	os << " | " << v.x << " |\n";
+	os << " | " << v.y << " |\n";
+	os << " | " << v.z << " |\n";
+	return os;
+}
+
+std::ostream& lm::operator<<(std::ostream& os, const mat4x4& v) {
+	os << " | " << v.x << " |\n";
+	os << " | " << v.y << " |\n";
+	os << " | " << v.z << " |\n";
+	os << " | " << v.w << " |\n";
+	return os;
 }
