@@ -389,6 +389,24 @@ namespace lm {
 		}
 	};
 
+	// Useful matricies
+	mat4x4 position3d(const vec3& position);
+	mat3x3 position2d(const vec2& position);
+
+	mat3x3 rotation3d(const vec3& rotation);
+	mat2x2 rotation2d(const float& rotation);
+	mat4x4 rotate3dAroundPoint(const vec3& rotationOrigin, const vec3& rotation);
+	mat3x3 rotate2dAroundPoint(const vec2& rotationOrigin, const float& rotation);
+
+	mat4x4 viewMatrix(vec3 at, vec3 eye, vec3 up = {0, 1, 0});
+	mat4x4 orthographic(const float& right, const float& left, const float& top, const float& bottom, const float& far, const float& near);
+	mat4x4 orthographic(const float& width, const float& height, const float& far, const float& near);
+	mat4x4 orthographic(const float& width, const float& height, const float& depth);
+
+	mat4x4 perspective(const float& fov, const float& near, const float& far, const float& width, const float& height);
+	mat4x4 perspective(const float& fov, const float& near, const float& far, const float& ratio = 0.0f);
+
+
 
 	// Add operator overload for vectors
 	vec2 operator+(const vec2& v1, const vec2& v2);
@@ -496,9 +514,9 @@ namespace lm {
 	vec3 operator*(mat3x3& mat, const vec3& vec);
 	vec4 operator*(mat4x4& mat, const vec4& vec);
 
-	mat2x2 operator*(const mat2x2& mat1, mat2x2& mat2);
-	mat3x3 operator*(const mat3x3& mat1, mat3x3& mat2);
-	mat4x4 operator*(const mat4x4& mat1, mat4x4& mat2);
+	mat2x2 operator*(mat2x2 mat1, mat2x2 mat2);
+	mat3x3 operator*(mat3x3 mat1, mat3x3 mat2);
+	mat4x4 operator*(mat4x4 mat1, mat4x4 mat2);
 
 
 	std::ostream& operator<<(std::ostream& os, const mat2x2& v);
