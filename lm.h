@@ -254,17 +254,17 @@ namespace lm {
 
 	// Matrix types
 	// Square matricies
-	struct mat2x2 {
+	struct mat2 {
 	private:
 		vec2* ptr;
 	public:
 		vec2 x, y;
 
-		mat2x2() {
+		mat2() {
 			x = {}; y = {};
 			ptr = &x;
 		}
-		mat2x2(const vec2& x1, const vec2& y1) {
+		mat2(const vec2& x1, const vec2& y1) {
 			x = x1; y = y1;
 			ptr = &x;
 		}
@@ -274,7 +274,7 @@ namespace lm {
 		}
 
 
-		mat2x2& operator=(const mat2x2& value) {
+		mat2& operator=(const mat2& value) {
 			x = value.x;
 			y = value.y;
 			return *this;
@@ -288,21 +288,21 @@ namespace lm {
 			return ptr[idx];
 		}
 	};
-	struct mat3x3 {
+	struct mat3 {
 	private:
 		vec3* ptr;
 	public:
 		vec3 x, y, z;
 
-		mat3x3() {
+		mat3() {
 			x = {}; y = {}; z = {};
 			ptr = &x;
 		}
-		mat3x3(const mat2x2& value) {
+		mat3(const mat2& value) {
 			x = value.x; y = value.y; z = {};
 			ptr = &x;
 		}
-		mat3x3(vec3 x1, vec3 y1, vec3 z1) {
+		mat3(vec3 x1, vec3 y1, vec3 z1) {
 			x = x1; y = y1; z = z1;
 			ptr = &x;
 		}
@@ -313,13 +313,13 @@ namespace lm {
 		}
 
 
-		mat3x3& operator=(const mat3x3& value) {
+		mat3& operator=(const mat3& value) {
 			x = value.x;
 			y = value.y;
 			z = value.z;
 			return *this;
 		}
-		mat3x3& operator=(const mat2x2& value) {
+		mat3& operator=(const mat2& value) {
 			x = value.x;
 			y = value.y;
 			return *this;
@@ -333,25 +333,25 @@ namespace lm {
 			return ptr[idx];
 		}
 	};
-	struct mat4x4 {
+	struct mat4 {
 	private:
 		vec4* ptr;
 	public:
 		vec4 x, y, z, w;
 
-		mat4x4() {
+		mat4() {
 			x = {}; y = {}; z = {}; w = {};
 			ptr = &x;
 		}
-		mat4x4(const mat2x2& value) {
+		mat4(const mat2& value) {
 			x = value.x; y = value.y; z = {}; w = {};
 			ptr = &x;
 		}
-		mat4x4(const mat3x3& value) {
+		mat4(const mat3& value) {
 			x = value.x; y = value.y; z = value.z; w = {};
 			ptr = &x;
 		}
-		mat4x4(vec4 x1, vec4 y1, vec4 z1, vec4 w1) {
+		mat4(vec4 x1, vec4 y1, vec4 z1, vec4 w1) {
 			x = x1; y = y1; z = z1; w = w1;
 			ptr = &x;
 		}
@@ -362,18 +362,18 @@ namespace lm {
 		}
 
 
-		mat4x4& operator=(const mat4x4& value) {
+		mat4& operator=(const mat4& value) {
 			x = value.x;
 			y = value.y;
 			z = value.z;
 			return *this;
 		}
-		mat4x4& operator=(const mat2x2& value) {
+		mat4& operator=(const mat2& value) {
 			x = value.x;
 			y = value.y;
 			return *this;
 		}
-		mat4x4& operator=(const mat3x3& value) {
+		mat4& operator=(const mat3& value) {
 			x = value.x;
 			y = value.y;
 			z = value.z;
@@ -390,21 +390,21 @@ namespace lm {
 	};
 
 	// Useful matricies
-	mat4x4 position3d(const vec3& position);
-	mat3x3 position2d(const vec2& position);
+	mat4 position3d(const vec3& position);
+	mat3 position2d(const vec2& position);
 
-	mat3x3 rotation3d(const vec3& rotation);
-	mat2x2 rotation2d(const float& rotation);
-	mat4x4 rotate3dAroundPoint(const vec3& rotationOrigin, const vec3& rotation);
-	mat3x3 rotate2dAroundPoint(const vec2& rotationOrigin, const float& rotation);
+	mat3 rotation3d(const vec3& rotation);
+	mat2 rotation2d(const float& rotation);
+	mat4 rotate3dAroundPoint(const vec3& rotationOrigin, const vec3& rotation);
+	mat3 rotate2dAroundPoint(const vec2& rotationOrigin, const float& rotation);
 
-	mat4x4 viewMatrix(vec3 at, vec3 eye, vec3 up = {0, 1, 0});
-	mat4x4 orthographic(const float& right, const float& left, const float& top, const float& bottom, const float& far, const float& near);
-	mat4x4 orthographic(const float& width, const float& height, const float& far, const float& near);
-	mat4x4 orthographic(const float& width, const float& height, const float& depth);
+	mat4 viewMatrix(vec3 at, vec3 eye, vec3 up = {0, 1, 0});
+	mat4 orthographic(const float& right, const float& left, const float& top, const float& bottom, const float& far, const float& near);
+	mat4 orthographic(const float& width, const float& height, const float& far, const float& near);
+	mat4 orthographic(const float& width, const float& height, const float& depth);
 
-	mat4x4 perspective(const float& fov, const float& near, const float& far, const float& width, const float& height);
-	mat4x4 perspective(const float& fov, const float& near, const float& far, const float& ratio = 0.0f);
+	mat4 perspective(const float& fov, const float& near, const float& far, const float& width, const float& height);
+	mat4 perspective(const float& fov, const float& near, const float& far, const float& ratio = 0.0f);
 
 
 
@@ -510,16 +510,16 @@ namespace lm {
 
 	// Matrix operator overloads
 	// Square matricies
-	vec2 operator*(mat2x2& mat, const vec2& vec);
-	vec3 operator*(mat3x3& mat, const vec3& vec);
-	vec4 operator*(mat4x4& mat, const vec4& vec);
+	vec2 operator*(mat2& mat, const vec2& vec);
+	vec3 operator*(mat3& mat, const vec3& vec);
+	vec4 operator*(mat4& mat, const vec4& vec);
 
-	mat2x2 operator*(mat2x2 mat1, mat2x2 mat2);
-	mat3x3 operator*(mat3x3 mat1, mat3x3 mat2);
-	mat4x4 operator*(mat4x4 mat1, mat4x4 mat2);
+	mat2 operator*(mat2 mat1, mat2 mat2);
+	mat3 operator*(mat3 mat1, mat3 mat2);
+	mat4 operator*(mat4 mat1, mat4 mat2);
 
 
-	std::ostream& operator<<(std::ostream& os, const mat2x2& v);
-	std::ostream& operator<<(std::ostream& os, const mat3x3& v);
-	std::ostream& operator<<(std::ostream& os, const mat4x4& v);
+	std::ostream& operator<<(std::ostream& os, const mat2& v);
+	std::ostream& operator<<(std::ostream& os, const mat3& v);
+	std::ostream& operator<<(std::ostream& os, const mat4& v);
 }

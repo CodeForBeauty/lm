@@ -386,52 +386,52 @@ std::ostream& lm::operator<<(std::ostream& os, const vec4& v) {
 }
 
 
-vec2 lm::operator*(mat2x2& mat, const vec2& vec) {
+vec2 lm::operator*(mat2& mat, const vec2& vec) {
 	return { dot(mat.column(0), vec), dot(mat.column(1), vec) };
 }
 
-vec3 lm::operator*(mat3x3& mat, const vec3& vec) {
+vec3 lm::operator*(mat3& mat, const vec3& vec) {
 	return { dot(mat.column(0), vec), dot(mat.column(1), vec), dot(mat.column(2), vec) };
 }
 
-vec4 lm::operator*(mat4x4& mat, const vec4& vec) {
+vec4 lm::operator*(mat4& mat, const vec4& vec) {
 	return { dot(mat.column(0), vec), dot(mat.column(1), vec), dot(mat.column(2), vec), dot(mat.column(3), vec) };
 }
 
 
 
-mat2x2 lm::operator*(mat2x2 mat1, mat2x2 mat2) {
+mat2 lm::operator*(mat2 mat1, mat2 mat2) {
 	return {{ dot(mat1.x, mat2.column(0)), dot(mat1.x, mat2.column(1)) },
 			{ dot(mat1.y, mat2.column(0)), dot(mat1.y, mat2.column(1)) }};
 }
 
-mat3x3 lm::operator*(mat3x3 mat1, mat3x3 mat2) {
+mat3 lm::operator*(mat3 mat1, mat3 mat2) {
 	return {{ dot(mat1.x, mat2.column(0)), dot(mat1.x, mat2.column(1)), dot(mat1.z, mat2.column(2)) },
 			{ dot(mat1.y, mat2.column(0)), dot(mat1.y, mat2.column(1)), dot(mat1.y, mat2.column(2)) },
 			{ dot(mat1.z, mat2.column(0)), dot(mat1.z, mat2.column(1)), dot(mat1.z, mat2.column(2)) }};
 }
 
-mat4x4 lm::operator*(mat4x4 mat1, mat4x4 mat2) {
+mat4 lm::operator*(mat4 mat1, mat4 mat2) {
 	return {{ dot(mat1.x, mat2.column(0)), dot(mat1.x, mat2.column(1)), dot(mat1.x, mat2.column(2)), dot(mat1.x, mat2.column(3)) },
 			{ dot(mat1.y, mat2.column(0)), dot(mat1.y, mat2.column(1)), dot(mat1.y, mat2.column(2)), dot(mat1.y, mat2.column(3)) },
 			{ dot(mat1.z, mat2.column(0)), dot(mat1.z, mat2.column(1)), dot(mat1.z, mat2.column(2)), dot(mat1.z, mat2.column(3)) },
 			{ dot(mat1.w, mat2.column(0)), dot(mat1.w, mat2.column(1)), dot(mat1.w, mat2.column(2)), dot(mat1.w, mat2.column(3)) }};
 }
 
-std::ostream& lm::operator<<(std::ostream& os, const mat2x2& v) {
+std::ostream& lm::operator<<(std::ostream& os, const mat2& v) {
 	os << " | " << v.x << " |\n";
 	os << " | " << v.y << " |\n";
 	return os;
 }
 
-std::ostream& lm::operator<<(std::ostream& os, const mat3x3& v) {
+std::ostream& lm::operator<<(std::ostream& os, const mat3& v) {
 	os << " | " << v.x << " |\n";
 	os << " | " << v.y << " |\n";
 	os << " | " << v.z << " |\n";
 	return os;
 }
 
-std::ostream& lm::operator<<(std::ostream& os, const mat4x4& v) {
+std::ostream& lm::operator<<(std::ostream& os, const mat4& v) {
 	os << " | " << v.x << " |\n";
 	os << " | " << v.y << " |\n";
 	os << " | " << v.z << " |\n";
@@ -439,34 +439,34 @@ std::ostream& lm::operator<<(std::ostream& os, const mat4x4& v) {
 	return os;
 }
 
-mat4x4 lm::position3d(const vec3& position) {
+mat4 lm::position3d(const vec3& position) {
 	return { {}, {}, {}, {position.x, position.y, position.z, 1} };
 }
 
-mat3x3 lm::position2d(const vec2& position) {
+mat3 lm::position2d(const vec2& position) {
 	return { {}, {}, {position.x, position.y, 1} };
 }
 
 
-mat3x3 lm::rotation3d(const vec3& rotation) {
+mat3 lm::rotation3d(const vec3& rotation) {
 	vec3 theta = { degrees2radians(rotation.x), degrees2radians(rotation.y) , degrees2radians(rotation.z) };
 
 	vec3 thetaCos = { std::cosf(theta.x), std::cosf(theta.y), std::cosf(theta.z) };
 	vec3 thetaSin = { std::sinf(theta.x), std::sinf(theta.y), std::sinf(theta.z) };
 
-	mat3x3 rotX = {
+	mat3 rotX = {
 		{1, 0, 0},
 		{0, thetaCos.x, -thetaSin.x},
 		{0, thetaSin.x, thetaCos.x}
 	};
 
-	mat3x3 rotY = {
+	mat3 rotY = {
 		{thetaCos.y, 0, -thetaSin.y},
 		{0, 1, 0},
 		{thetaSin.y, 0, thetaCos.y}
 	};
 
-	mat3x3 rotZ = {
+	mat3 rotZ = {
 		{thetaCos.z, -thetaSin.z, 0},
 		{thetaSin.z, thetaCos.z, 0},
 		{0, 0, 1}
@@ -475,13 +475,13 @@ mat3x3 lm::rotation3d(const vec3& rotation) {
 	return rotX * rotY * rotZ;
 }
 
-mat2x2 lm::rotation2d(const float& rotation) {
+mat2 lm::rotation2d(const float& rotation) {
 	float theta = degrees2radians(rotation);
 
 	float valX = std::cos(theta);
 	float valY = std::sin(theta);
 
-	mat2x2 rot = {
+	mat2 rot = {
 		{ valX, valY, },
 		{ -valY, valX }
 	};
@@ -489,15 +489,15 @@ mat2x2 lm::rotation2d(const float& rotation) {
 	return rot;
 }
 
-mat4x4 lm::rotate3dAroundPoint(const vec3& rotationOrigin, const vec3& rotation) {
+mat4 lm::rotate3dAroundPoint(const vec3& rotationOrigin, const vec3& rotation) {
 	return position3d(-rotationOrigin) * rotation3d(rotation) * position3d(rotationOrigin);
 }
 
-mat3x3 lm::rotate2dAroundPoint(const vec2& rotationOrigin, const float& rotation) {
+mat3 lm::rotate2dAroundPoint(const vec2& rotationOrigin, const float& rotation) {
 	return position2d(-rotationOrigin) * rotation2d(rotation) * position2d(rotationOrigin);
 }
 
-mat4x4 lm::viewMatrix(vec3 at, vec3 eye, vec3 up) {
+mat4 lm::viewMatrix(vec3 at, vec3 eye, vec3 up) {
 	vec3 zaxis = normalize(at - eye);
 	vec3 xaxis = normalize(cross(up, zaxis));
 	vec3 yaxis = cross(zaxis, xaxis);
@@ -507,7 +507,7 @@ mat4x4 lm::viewMatrix(vec3 at, vec3 eye, vec3 up) {
 	};
 }
 
-mat4x4 lm::orthographic(const float& right, const float& left, const float& top, const float& bottom, const float& far, const float& near) {
+mat4 lm::orthographic(const float& right, const float& left, const float& top, const float& bottom, const float& far, const float& near) {
 	return {
 		{2 / (right - left), 0, 0, 0},
 		{0, 2 / (top - bottom), 0, 0},
@@ -516,16 +516,16 @@ mat4x4 lm::orthographic(const float& right, const float& left, const float& top,
 	};
 }
 
-mat4x4 lm::orthographic(const float& width, const float& height, const float& far, const float& near) {
+mat4 lm::orthographic(const float& width, const float& height, const float& far, const float& near) {
 	return orthographic(width, -width, height, -height, far, near);
 }
 
-mat4x4 lm::orthographic(const float& width, const float& height, const float& depth) {
+mat4 lm::orthographic(const float& width, const float& height, const float& depth) {
 	return orthographic(width, -width, height, -height, depth, -depth);
 }
 
 
-mat4x4 lm::perspective(const float& fov, const float& near, const float& far, const float& ratio) {
+mat4 lm::perspective(const float& fov, const float& near, const float& far, const float& ratio) {
 	float y = 1 / std::tan(fov / 2);
 	return {
 		{ y * ratio, 0, 0, 0 },
@@ -535,6 +535,6 @@ mat4x4 lm::perspective(const float& fov, const float& near, const float& far, co
 	};
 }
 
-mat4x4 lm::perspective(const float& fov, const float& near, const float& far, const float& width, const float& height) {
+mat4 lm::perspective(const float& fov, const float& near, const float& far, const float& width, const float& height) {
 	return perspective(fov, near, far, width / height);
 }
