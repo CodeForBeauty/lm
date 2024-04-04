@@ -438,6 +438,29 @@ Matrix lm::operator*(Matrix mat1, Matrix mat2) {
 	return out;
 }
 
+std::list<double> lm::operator*(Matrix mat1, std::list<double> vec)
+{
+	if (mat1.rowsSize != vec.size()) {
+		std::cerr << "Given Matrix and list are not multipliable." << std::endl;
+		throw std::length_error("Given Matrix and list are not multipliable.");
+	}
+
+	std::list<double> out = std::list<double>(mat1.columnsSize);
+	std::list<double>::iterator ptr = out.begin();
+
+
+	for (int i = 0; i < mat1.columnsSize; i++) {
+		std::list<double>::iterator vecPtr = vec.begin();
+		for (int j = 0; j < mat1.rowsSize; j++) {
+			*ptr += *vecPtr * mat1(j, i);
+			vecPtr++;
+		}
+		ptr++;
+	}
+
+	return out;
+}
+
 std::ostream& lm::operator<<(std::ostream& os, const mat2& v) {
 	os << " | " << v.x << " |\n";
 	os << " | " << v.y << " |\n";

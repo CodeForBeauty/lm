@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <list>
 
 
 namespace lm {
@@ -408,13 +409,14 @@ namespace lm {
 	mat3 rotation3d(const vec3& rotation);
 	mat2 rotation2d(const float& rotation);
 
-	mat4 viewMatrix(vec3 at, vec3 eye, vec3 up = {0, 1, 0});
+	mat4 viewMatrix(vec3 at, vec3 eye, vec3 up = { 0, 1, 0 });
 	mat4 orthographic(const float& right, const float& left, const float& top, const float& bottom, const float& far, const float& near);
 	mat4 orthographic(const float& width, const float& height, const float& far, const float& near);
 	mat4 orthographic(const float& width, const float& height, const float& depth);
 
 	mat4 perspective(const float& fov, const float& near, const float& far, const float& width, const float& height);
 	mat4 perspective(const float& fov, const float& near, const float& far, const float& ratio = 0.0f);
+
 
 
 	// Non square matricies
@@ -570,7 +572,7 @@ namespace lm {
 
 	// Non-square matricies
 	Matrix operator*(Matrix mat1, Matrix mat2);
-	Matrix operator*(Matrix mat1, float* mat2);
+	std::list<double> operator*(Matrix mat1, std::list<double> vec);
 
 
 
