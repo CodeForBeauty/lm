@@ -4,9 +4,9 @@
 
 namespace lm {
 	// Constant variables
-	const float PI = 3.141592653589793;
-	const float E = 2.718281828459045;
-	const float PIrad = PI / 180;
+	const double PI = 3.141592653589793;
+	const double E = 2.718281828459045;
+	const double PIrad = PI / 180;
 
 	// Converting euler degrees and radians
 	float degrees2radians(float angle);
@@ -302,6 +302,10 @@ namespace lm {
 			x = value.x; y = value.y; z = {};
 			ptr = &x;
 		}
+		mat3(const mat2& value, const vec3& z1) {
+			x = value.x; y = value.y; z = z1;
+			ptr = &x;
+		}
 		mat3(vec3 x1, vec3 y1, vec3 z1) {
 			x = x1; y = y1; z = z1;
 			ptr = &x;
@@ -347,8 +351,16 @@ namespace lm {
 			x = value.x; y = value.y; z = {}; w = {};
 			ptr = &x;
 		}
+		mat4(const mat2& value, const vec4& z1, const vec4& w1) {
+			x = value.x; y = value.y; z = z1; w = w1;
+			ptr = &x;
+		}
 		mat4(const mat3& value) {
 			x = value.x; y = value.y; z = value.z; w = {};
+			ptr = &x;
+		}
+		mat4(const mat3& value, const vec4& w1) {
+			x = value.x; y = value.y; z = value.z; w = w1;
 			ptr = &x;
 		}
 		mat4(vec4 x1, vec4 y1, vec4 z1, vec4 w1) {
@@ -395,8 +407,6 @@ namespace lm {
 
 	mat3 rotation3d(const vec3& rotation);
 	mat2 rotation2d(const float& rotation);
-	mat4 rotate3dAroundPoint(const vec3& rotationOrigin, const vec3& rotation);
-	mat3 rotate2dAroundPoint(const vec2& rotationOrigin, const float& rotation);
 
 	mat4 viewMatrix(vec3 at, vec3 eye, vec3 up = {0, 1, 0});
 	mat4 orthographic(const float& right, const float& left, const float& top, const float& bottom, const float& far, const float& near);
@@ -405,6 +415,46 @@ namespace lm {
 
 	mat4 perspective(const float& fov, const float& near, const float& far, const float& width, const float& height);
 	mat4 perspective(const float& fov, const float& near, const float& far, const float& ratio = 0.0f);
+
+
+	// Non square matricies
+	struct Matrix {
+		size_t rowsSize, columnsSize;
+		double* data;
+
+		Matrix(const int& rows, const int& columns) {
+			rowsSize = rows; columnsSize = columns;
+			data = new double[rows * columns];
+		}
+		~Matrix() {
+			delete data;
+		}
+
+		double& operator() (int row, int column) {
+			return data[row * columnsSize + column];
+		}
+
+		Matrix& operator= (const Matrix& mat) {
+			delete data;
+			data = std::copy(mat.data, mat.data + (sizeof(double) * mat.rowsSize * mat.columnsSize), data);
+			return *this;
+		}
+		Matrix& operator= (const mat2& mat) {
+			delete data;
+			data = new double[4] {mat.x.x, mat.x.y, mat.y.x, mat.y.y};
+			return *this;
+		}
+		Matrix& operator= (const mat3& mat) {
+			delete data;
+			data = new double[9] {mat.x.x, mat.x.y, mat.x.z, mat.y.x, mat.y.y, mat.y.z, mat.z.x, mat.z.y, mat.z.z};
+			return *this;
+		}
+		Matrix& operator= (const mat4& mat) {
+			delete data;
+			data = new double[16] {mat.x.x, mat.x.y, mat.x.z, mat.x.w, mat.y.x, mat.y.y, mat.y.z, mat.y.w, mat.z.x, mat.z.y, mat.z.z, mat.z.w, mat.w.x, mat.w.y, mat.w.z, mat.w.w};
+			return *this;
+		}
+	};
 
 
 
@@ -510,16 +560,23 @@ namespace lm {
 
 	// Matrix operator overloads
 	// Square matricies
-	vec2 operator*(mat2& mat, const vec2& vec);
-	vec3 operator*(mat3& mat, const vec3& vec);
-	vec4 operator*(mat4& mat, const vec4& vec);
+	vec2 operator*(mat2 mat, vec2 vec);
+	vec3 operator*(mat3 mat, vec3 vec);
+	vec4 operator*(mat4 mat, vec4 vec);
 
 	mat2 operator*(mat2 mat1, mat2 mat2);
 	mat3 operator*(mat3 mat1, mat3 mat2);
 	mat4 operator*(mat4 mat1, mat4 mat2);
 
+	// Non-square matricies
+	Matrix operator*(Matrix mat1, Matrix mat2);
+	Matrix operator*(Matrix mat1, float* mat2);
+
+
 
 	std::ostream& operator<<(std::ostream& os, const mat2& v);
 	std::ostream& operator<<(std::ostream& os, const mat3& v);
 	std::ostream& operator<<(std::ostream& os, const mat4& v);
+
+	std::ostream& operator<<(std::ostream& os, Matrix mat1);
 }

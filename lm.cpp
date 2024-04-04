@@ -386,15 +386,15 @@ std::ostream& lm::operator<<(std::ostream& os, const vec4& v) {
 }
 
 
-vec2 lm::operator*(mat2& mat, const vec2& vec) {
+vec2 lm::operator*(mat2 mat, vec2 vec) {
 	return { dot(mat.column(0), vec), dot(mat.column(1), vec) };
 }
 
-vec3 lm::operator*(mat3& mat, const vec3& vec) {
+vec3 lm::operator*(mat3 mat, vec3 vec) {
 	return { dot(mat.column(0), vec), dot(mat.column(1), vec), dot(mat.column(2), vec) };
 }
 
-vec4 lm::operator*(mat4& mat, const vec4& vec) {
+vec4 lm::operator*(mat4 mat, vec4 vec) {
 	return { dot(mat.column(0), vec), dot(mat.column(1), vec), dot(mat.column(2), vec), dot(mat.column(3), vec) };
 }
 
@@ -418,6 +418,26 @@ mat4 lm::operator*(mat4 mat1, mat4 mat2) {
 			{ dot(mat1.w, mat2.column(0)), dot(mat1.w, mat2.column(1)), dot(mat1.w, mat2.column(2)), dot(mat1.w, mat2.column(3)) }};
 }
 
+Matrix lm::operator*(Matrix mat1, Matrix mat2) {
+	if (mat1.columnsSize != mat2.rowsSize) {
+		std::cerr << "Given Matrices are not multipliable. mat1 must have the same columnsSize as mat2's rowsSize" << std::endl;
+		throw std::length_error("Given Matrices are not multipliable.");
+	}
+	Matrix out = Matrix(mat1.rowsSize, mat2.columnsSize);
+
+	for (int i = 0; i < out.rowsSize; i++) {
+		for (int j = 0; i < out.columnsSize; i++) {
+			double tmpVal = 0;
+			for (int i1 = 0; i1 < mat1.columnsSize; i1++) {
+				tmpVal += mat1(i, i1) * mat2(i1, j);
+			}
+			out(i, j) = tmpVal;
+		}
+	}
+
+	return out;
+}
+
 std::ostream& lm::operator<<(std::ostream& os, const mat2& v) {
 	os << " | " << v.x << " |\n";
 	os << " | " << v.y << " |\n";
@@ -439,12 +459,22 @@ std::ostream& lm::operator<<(std::ostream& os, const mat4& v) {
 	return os;
 }
 
+std::ostream& lm::operator<<(std::ostream& os, Matrix mat1) {
+	for (int i = 0; i < mat1.rowsSize; i++) {
+		for (int j = 0; j < mat1.columnsSize; j++) {
+			std::cout << " | " << mat1(i, j) << ", ";
+		}
+		std::cout << " | \n";
+	}
+	return os;
+}
+
 mat4 lm::position3d(const vec3& position) {
-	return { {}, {}, {}, {position.x, position.y, position.z, 1} };
+	return { {1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {position.x, position.y, position.z, 1} };
 }
 
 mat3 lm::position2d(const vec2& position) {
-	return { {}, {}, {position.x, position.y, 1} };
+	return { {1, 0, 0}, {0, 1, 0}, {position.x, position.y, 1} };
 }
 
 
@@ -489,13 +519,6 @@ mat2 lm::rotation2d(const float& rotation) {
 	return rot;
 }
 
-mat4 lm::rotate3dAroundPoint(const vec3& rotationOrigin, const vec3& rotation) {
-	return position3d(-rotationOrigin) * rotation3d(rotation) * position3d(rotationOrigin);
-}
-
-mat3 lm::rotate2dAroundPoint(const vec2& rotationOrigin, const float& rotation) {
-	return position2d(-rotationOrigin) * rotation2d(rotation) * position2d(rotationOrigin);
-}
 
 mat4 lm::viewMatrix(vec3 at, vec3 eye, vec3 up) {
 	vec3 zaxis = normalize(at - eye);
