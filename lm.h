@@ -15,8 +15,6 @@ namespace lm {
 
 	// Vector types
 	struct vec2 {
-	private:
-		float* ptr;
 	public:
 		float x, y;
 		vec2() {
@@ -61,10 +59,11 @@ namespace lm {
 			y--;
 			return *this;
 		}
-	};
-	struct vec3 {
+
 	private:
 		float* ptr;
+	};
+	struct vec3 {
 	public:
 		float x, y, z;
 		vec3() {
@@ -130,10 +129,11 @@ namespace lm {
 			z--;
 			return *this;
 		}
-	};
-	struct vec4 {
+
 	private:
 		float* ptr;
+	};
+	struct vec4 {
 	public:
 		float x, y, z, w;
 		vec4() {
@@ -220,6 +220,9 @@ namespace lm {
 			w--;
 			return *this;
 		}
+
+	private:
+		float* ptr;
 	};
 
 	// Vector math functions
@@ -256,8 +259,6 @@ namespace lm {
 	// Matrix types
 	// Square matricies
 	struct mat2 {
-	private:
-		vec2* ptr;
 	public:
 		vec2 x, y;
 
@@ -288,10 +289,11 @@ namespace lm {
 			}
 			return ptr[idx];
 		}
+
+	private:
+		vec2* ptr;
 	};
 	struct mat3 {
-	private:
-		vec3* ptr;
 	public:
 		vec3 x, y, z;
 
@@ -337,10 +339,11 @@ namespace lm {
 			}
 			return ptr[idx];
 		}
+
+	private:
+		vec3* ptr;
 	};
 	struct mat4 {
-	private:
-		vec4* ptr;
 	public:
 		vec4 x, y, z, w;
 
@@ -400,6 +403,9 @@ namespace lm {
 			}
 			return ptr[idx];
 		}
+
+	private:
+		vec4* ptr;
 	};
 
 	// Useful matricies
@@ -421,8 +427,8 @@ namespace lm {
 
 	// Non square matricies
 	struct Matrix {
-		size_t rowsSize, columnsSize;
 		double* data;
+		size_t rowsSize, columnsSize;
 
 		Matrix(const int& rows, const int& columns) {
 			rowsSize = rows; columnsSize = columns;
