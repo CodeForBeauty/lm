@@ -263,6 +263,10 @@ namespace lm {
 			}
 			return (&x)[idx];
 		}
+
+		operator float* () {
+			return &x.x;
+		}
 	};
 	struct mat3 {
 	public:
@@ -306,6 +310,10 @@ namespace lm {
 			}
 			return (&x)[idx];
 		}
+
+		operator float* () {
+			return &x.x;
+		}
 	};
 	struct mat4 {
 	public:
@@ -340,6 +348,7 @@ namespace lm {
 			x = value.x;
 			y = value.y;
 			z = value.z;
+			w = value.w;
 			return *this;
 		}
 		mat4& operator=(const mat2& value) {
@@ -360,6 +369,10 @@ namespace lm {
 				throw std::out_of_range("Index out of range 0-4.");
 			}
 			return (&x)[idx];
+		}
+
+		operator float* () {
+			return &x.x;
 		}
 	};
 
@@ -399,7 +412,7 @@ namespace lm {
 
 		Matrix& operator= (const Matrix& mat) {
 			delete data;
-			data = std::copy(mat.data, mat.data + (sizeof(double) * mat.rowsSize * mat.columnsSize), data);
+			data = std::copy(mat.data, mat.data + (mat.rowsSize * mat.columnsSize), data);
 			return *this;
 		}
 		Matrix& operator= (const mat2& mat) {
